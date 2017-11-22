@@ -1,0 +1,61 @@
+{distribution}-{version}(-{build tag})?-py2.py3-None-{platform tag}.whl
+
+linux_x86_64
+macosx_10_12_x86_64
+
+
+https://www.python.org/dev/peps/pep-0491/#file-name-convention
+
+{distribution}-{version}(-{build tag})?-{python tag}-{abi tag}-{platform tag}.whl
+
+* distribution: Distribution name, e.g. 'django', 'pyramid'.
+
+* version: Distribution version, e.g. 1.0.
+
+* build tag: Optional build number. Must start with a digit. A tie breaker if two wheels have the same version. Sort as the empty string if unspecified, else sort the initial digits as a number, and the remainder lexicographically.
+
+* language implementation and version tag: E.g. 'py27', 'py2', 'py3'.
+
+* abi tag: E.g. 'cp33m', 'abi3', 'none'.
+
+* platform tag: E.g. 'linux_x86_64', 'any'.
+
+> For example, distribution-1.0-1-py27-none-any.whl is the
+> first build of a package called 'distribution', and is
+> compatible with Python 2.7 (any Python 2.7 implementation),
+> with no ABI (pure Python), on any CPU architecture.
+
+> The last three components of the filename before the
+> extension are called "compatibility tags." The
+> compatibility tags express the package's basic interpreter
+> requirements and are detailed in PEP 425.
+
+
+https://www.python.org/dev/peps/pep-0425/#details
+
+Python Tag
+
+py: Generic Python (does not require implementation-specific features)
+cp: CPython
+ip: IronPython
+pp: PyPy
+jy: Jython
+Other Python implementations should use sys.implementation.name.
+
+The version can be just the major version 2 or 3 py2, py3 for many pure-Python distributions.
+
+A single-source Python 2/3 compatible distribution can use the compound tag py2.py3.
+
+ABI Tag
+
+The ABI tag indicates which Python ABI is required by any included extension modules. For implementation-specific ABIs, the implementation is abbreviated in the same way as the Python Tag, e.g. cp33d would be the CPython 3.3 ABI with debugging.
+
+The CPython stable ABI is abi3 as in the shared library suffix.
+
+Platform Tag
+
+The platform tag is simply distutils.util.get_platform() with all hyphens - and periods . replaced with underscore _.
+
+win32
+linux_i386
+linux_x86_64
