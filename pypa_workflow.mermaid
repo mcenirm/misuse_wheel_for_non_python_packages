@@ -1,0 +1,32 @@
+graph TB
+  classDef file fill:#fff
+
+  subgraph Project from git repository
+    setuppy["setup.py"]
+    manifestin["MANIFEST.in"]
+    otherfiles["Other files ..."]
+    collect1{ }
+
+    class setuppy,manifestin,otherfiles file
+  end
+
+  setuppy --> collect1
+  manifestin --> collect1
+  otherfiles --> collect1
+
+  subgraph Source distributions
+    sdist["dist/{dist}-{ver}.tar.gz or .zip"]
+    collect1 -->|python setup.py sdist| sdist
+  end
+  subgraph Built distributions
+    wheel["dist/{dist}-{ver}-{pyvv}-{abi}-{plat}.whl"]
+    collect1 -->|python setup.py bdist_wheel| wheel
+    class wheel file
+  end
+
+  collect2{ }
+  pypi("PyPI")
+
+  sdist --> collect2
+  wheel --> collect2
+  collect2 -->|twine upload dist/*| pypi
